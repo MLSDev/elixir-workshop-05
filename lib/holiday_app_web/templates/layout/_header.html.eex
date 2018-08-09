@@ -1,21 +1,33 @@
 <div class="container">
-  <%= if logged_in?(@conn) do %>
-    <span>
-      <%= link "Holidays", to: holiday_path(@conn, :index)%>
-    </span>
-    <%= if admin?(@conn) do %>
-      |
-      <span>
-        <%= link "Users", to: user_path(@conn, :index)%>
-      </span>
+  <div class="row">
+    <%= if logged_in?(@conn) do %>
+      <div class="col-md-6">
+        <span>
+          <%= link "Holidays", to: holiday_path(@conn, :index)%>
+        </span>
+        <%= if admin?(@conn) do %>
+          |
+          <span>
+            <%= link "Users", to: user_path(@conn, :index)%>
+          </span>
+        <% end %>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="text-muted"><%= current_user(@conn).email %></span>
+        <%= if admin?(@conn) do %>
+          <span class="label label-warning">admin</span>
+        <% end %>
+        |
+        <span>
+          <%= link "Logout", to: auth_path(@conn, :logout), method: :delete %>
+        </span>
+      </div>
+    <% else %>
+      <div class="col-md-12">
+        <span>
+          <%= link "Login", to: auth_path(@conn, :new)%>
+        </span>
+      </div>
     <% end %>
-    |
-    <span>
-      <%= link "Logout", to: auth_path(@conn, :logout), method: :delete %>
-    </span>
-  <% else %>
-    <span>
-      <%= link "Login", to: auth_path(@conn, :new)%>
-    </span>
-  <% end %>
+  </div>
 </div>
