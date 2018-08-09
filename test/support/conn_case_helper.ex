@@ -10,11 +10,15 @@ defmodule HolidayAppWeb.ConnCaseHelper do
     |> get("/")
   end
 
-  def build_conn_and_login(user) do
+  def build_conn_for_user(user) do
     build_conn_with_session()
     |> HolidayAppWeb.Guardian.Plug.sign_in(user)
     |> HolidayAppWeb.Plugs.FetchCurrentUser.call(%{})
-    |> send_resp(200, "Flush session")
+  end
+
+  def build_conn_and_login(user) do
+    build_conn_for_user(user)
+    |> send_resp(200, "Flush the session")
     |> recycle()
   end
 end

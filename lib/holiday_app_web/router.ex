@@ -30,6 +30,12 @@ defmodule HolidayAppWeb.Router do
 
     delete "/auth/logout", AuthController, :logout
     resources "/holidays", HolidayController
-    resources "/users", UserController, only: [:index, :show, :edit, :update]
+    resources "/users", UserController, only: [:index, :show]
+  end
+
+  scope "/", HolidayAppWeb do
+    pipe_through [:browser, Guardian.Plug.EnsureAuthenticated, HolidayAppWeb.Plugs.EnsureAdmin]
+
+    resources "/users", UserController, only: [:edit, :update]
   end
 end
