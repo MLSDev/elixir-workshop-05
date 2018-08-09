@@ -39,4 +39,34 @@ defmodule HolidayAppWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "Show User"
     end
   end
+
+  describe "edit" do
+    test "renders form for editing chosen user", %{conn: conn} do
+      user = insert(:user)
+      conn = get conn, user_path(conn, :edit, user)
+      assert html_response(conn, 200) =~ "Edit User"
+    end
+  end
+
+  describe "update" do
+    setup %{conn: conn} do
+      user = insert(:user)
+      {:ok, conn: conn, user: user}
+    end
+
+    test "redirects when data is valid", %{conn: conn, user: user} do
+      params = %{"name" => "Jane"}
+      conn = put conn, user_path(conn, :update, user), user: params
+      assert redirected_to(conn) == user_path(conn, :show, user)
+
+      conn = get conn, user_path(conn, :show, user)
+      assert html_response(conn, 200) =~ "Jane"
+    end
+
+    test "renders errors when data is invalid", %{conn: conn, user: user} do
+      params = %{"name" => "J"}
+      conn = put conn, user_path(conn, :update, user), user: params
+      assert html_response(conn, 200) =~ "Edit User"
+    end
+  end
 end

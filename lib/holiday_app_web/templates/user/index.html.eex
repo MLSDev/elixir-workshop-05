@@ -22,6 +22,7 @@
         <td><%= humanize(user.provider) %></td>
         <td class="text-right">
           <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
+          <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-primary btn-xs" %></span>
         </td>
       </tr>
     <% end %>

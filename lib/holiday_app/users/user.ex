@@ -50,6 +50,7 @@ defmodule HolidayApp.Users.User do
     struct
     |> cast(attrs, @required_fields ++ [:name, :photo_url, :hosted_domain])
     |> validate_required(@required_fields)
+    |> validate_provider()
     |> unique_constraint(:uid)
     |> validate_email(:email)
     |> validate_url(:photo_url)
@@ -61,10 +62,15 @@ defmodule HolidayApp.Users.User do
     struct
     |> cast(attrs, @changeable_fields)
     |> unique_constraint(:uid)
-    |> validate_inclusion(:provider, ["identity", "google", "facebook"])
+    |> validate_provider()
     |> verify_password()
     |> validate_url(:hosted_domain)
     |> validate_url(:photo_url)
+    |> validate_length(:name, min: 2)
+  end
+
+  defp validate_provider(changeset) do
+    validate_inclusion(changeset, :provider, ["identity", "google", "facebook"])
   end
 
   defp validate_email(changeset, field) do

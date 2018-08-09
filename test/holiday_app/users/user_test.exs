@@ -120,9 +120,16 @@ defmodule HolidayApp.Users.UserTest do
 
   describe "changeset/1 (used for updates)" do
     test "valid attributes" do
+      user = insert(:user)
       attrs = params_for(:user)
-      changeset = User.changeset(%User{}, attrs)
+      changeset = User.changeset(user, attrs)
       assert changeset.valid?
+    end
+
+    test "validates name length" do
+      user = insert(:user)
+      changeset = User.changeset(user, %{name: "J"})
+      assert "should be at least 2 character(s)" in errors_on(changeset).name
     end
   end
 end

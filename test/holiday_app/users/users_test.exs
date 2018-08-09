@@ -46,6 +46,34 @@ defmodule HolidayApp.UsersTest do
     end
   end
 
+  describe "create_user/1" do
+    test "with valid data creates a user" do
+      attrs = params_for(:google_user, %{name: "Dick Mountain"})
+      assert {:ok, %User{name: name}} = Users.create_user(attrs)
+      assert name == "Dick Mountain"
+    end
+
+    test "with invalid data returns error changeset" do
+      attrs = params_for(:google_user, %{provider: "mail.ru"})
+      assert {:error, %Ecto.Changeset{}} = Users.create_user(attrs)
+    end
+  end
+
+  describe "update_user/1" do
+    test "with valid data updates the user" do
+      user = insert(:user, %{name: "John Doe"})
+      attrs = %{name: "Jane Doe"}
+      assert {:ok, user} = Users.update_user(user, attrs)
+      assert user.name == "Jane Doe"
+    end
+
+    test "with invalid data returns error changeset" do
+      user = insert(:user)
+      attrs = %{name: "J"}
+      assert {:error, %Ecto.Changeset{}} = Users.update_user(user, attrs)
+    end
+  end
+
   describe "create_or_update_user/1" do
     test "creates new user if one does not exist" do
       attrs = params_for(:google_user)
