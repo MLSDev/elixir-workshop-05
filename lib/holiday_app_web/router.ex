@@ -30,15 +30,16 @@ defmodule HolidayAppWeb.Router do
   end
 
   scope "/", HolidayAppWeb do
-    pipe_through [:browser, :auth]
+    pipe_through [:browser, :auth, HolidayAppWeb.Plugs.EnsureAdmin]
 
-    delete "/auth/logout", AuthController, :logout
-    resources "/holidays", HolidayController
+    resources "/holidays", HolidayController, except: [:index, :show]
+    resources "/users", UserController, except: [:delete]
   end
 
   scope "/", HolidayAppWeb do
-    pipe_through [:browser, :auth, HolidayAppWeb.Plugs.EnsureAdmin]
+    pipe_through [:browser, :auth]
 
-    resources "/users", UserController, except: [:delete]
+    delete "/auth/logout", AuthController, :logout
+    resources "/holidays", HolidayController, only: [:index, :show]
   end
 end

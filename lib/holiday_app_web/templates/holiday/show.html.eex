@@ -1,7 +1,6 @@
 <h2>Show Holiday</h2>
 
 <ul>
-
   <li>
     <strong>Title:</strong>
     <%= @holiday.title %>
@@ -16,8 +15,10 @@
     <strong>Kind:</strong>
     <%= @holiday.kind %>
   </li>
-
 </ul>
 
-<span><%= link "Edit", to: holiday_path(@conn, :edit, @holiday) %></span>
+<% if admin?(@conn) do %>
+  <span><%= link "Edit", to: holiday_path(@conn, :edit, @holiday) %></span>
+  |
+<% end%>
 <span><%= link "Back", to: holiday_path(@conn, :index) %></span>
