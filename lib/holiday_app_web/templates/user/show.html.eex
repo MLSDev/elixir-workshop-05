@@ -1,20 +1,33 @@
 <h2>Show User</h2>
 
-<ul>
-  <li>
-    <strong>Name:</strong>
-    <%= @user.name %>
-  </li>
+<div class="row">
+  <div class="col-md-2">
+    <%= img_tag(@user.photo_url, class: "img-thumbnail") %>
+  </div>
 
-  <li>
-    <strong>Provider:</strong>
-    <%= humanize(@user.provider) %>
-  </li>
+  <div class="col-md-10">
+    <ul>
+      <li>
+        <strong>Name:</strong>
+        <%= @user.name %>
+      </li>
 
-  <li>
-    <strong>Photo:</strong>
-    <%= img_tag(@user.photo_url) %>
-  </li>
-</ul>
+      <li>
+        <strong>E-mail:</strong>
+        <%= @user.email %>
+      </li>
+
+      <li>
+        <strong>Provider:</strong>
+        <%= humanize(@user.provider) %>
+      </li>
+
+      <li>
+        <strong>Is admin:</strong>
+        <%= @user.is_admin %>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <span><%= link "Back", to: user_path(@conn, :index) %></span>
