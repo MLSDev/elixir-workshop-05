@@ -5,7 +5,7 @@ defmodule HolidayAppWeb.UserControllerTest do
 
   setup %{conn: conn} = config do
     unless config[:no_login] do
-      user = insert(:user, %{email: "mail@server.com"})
+      user = insert(:user, %{is_admin: true})
       conn = build_conn_and_login(user)
       {:ok, conn: conn, user: user}
     else
@@ -40,19 +40,15 @@ defmodule HolidayAppWeb.UserControllerTest do
     end
   end
 
-  describe "edit and update" do
-    setup  do
-      user = insert(:user, %{is_admin: true})
-      conn = build_conn_and_login(user)
-      {:ok, conn: conn, user: user}
-    end
-    
-    test "edit/2 renders form for editing chosen user", %{conn: conn, user: user} do
+  describe "edit" do
+    test "renders form for editing chosen user", %{conn: conn, user: user} do
       conn = get conn, user_path(conn, :edit, user)
       assert html_response(conn, 200) =~ "Edit User"
     end
+  end
 
-    test "update/2 redirects when data is valid", %{conn: conn, user: user} do
+  describe "update" do
+    test "redirects when data is valid", %{conn: conn, user: user} do
       params = %{"name" => "Jane"}
       conn = put conn, user_path(conn, :update, user), user: params
       assert redirected_to(conn) == user_path(conn, :show, user)
@@ -61,7 +57,7 @@ defmodule HolidayAppWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "Jane"
     end
 
-    test "update/2 renders errors when data is invalid", %{conn: conn, user: user} do
+    test "renders errors when data is invalid", %{conn: conn, user: user} do
       params = %{"name" => "J"}
       conn = put conn, user_path(conn, :update, user), user: params
       assert html_response(conn, 200) =~ "Edit User"

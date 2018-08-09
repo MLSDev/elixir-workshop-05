@@ -10,6 +10,10 @@ defmodule HolidayAppWeb.Router do
     plug HolidayAppWeb.AuthPipeline
   end
 
+  pipeline :auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/", HolidayAppWeb do
     pipe_through :browser
 
@@ -26,16 +30,15 @@ defmodule HolidayAppWeb.Router do
   end
 
   scope "/", HolidayAppWeb do
-    pipe_through [:browser, Guardian.Plug.EnsureAuthenticated]
+    pipe_through [:browser, :auth]
 
     delete "/auth/logout", AuthController, :logout
     resources "/holidays", HolidayController
-    resources "/users", UserController, only: [:index, :show]
   end
 
   scope "/", HolidayAppWeb do
-    pipe_through [:browser, Guardian.Plug.EnsureAuthenticated, HolidayAppWeb.Plugs.EnsureAdmin]
+    pipe_through [:browser, :auth, HolidayAppWeb.Plugs.EnsureAdmin]
 
-    resources "/users", UserController, only: [:edit, :update]
+    resources "/users", UserController, except: [:delete]
   end
 end
