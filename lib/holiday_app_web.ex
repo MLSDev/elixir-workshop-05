@@ -39,6 +39,7 @@ defmodule HolidayAppWeb do
 
       import HolidayAppWeb.Router.Helpers
       import HolidayAppWeb.ErrorHelpers
+      import HolidayAppWeb.ViewHelpers
       import HolidayAppWeb.Gettext
     end
   end

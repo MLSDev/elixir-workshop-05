@@ -3,10 +3,12 @@
     <span>
       <%= link "Holidays", to: holiday_path(@conn, :index)%>
     </span>
-    |
-    <span>
-      <%= link "Users", to: user_path(@conn, :index)%>
-    </span>
+    <%= if admin?(@conn) do %>
+      |
+      <span>
+        <%= link "Users", to: user_path(@conn, :index)%>
+      </span>
+    <% end %>
     |
     <span>
       <%= link "Logout", to: auth_path(@conn, :logout), method: :delete %>
