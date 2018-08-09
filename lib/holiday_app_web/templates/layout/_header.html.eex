@@ -1,0 +1,19 @@
+<div class="container">
+  <%= if logged_in?(@conn) do %>
+    <span>
+      <%= link "Holidays", to: holiday_path(@conn, :index)%>
+    </span>
+    |
+    <span>
+      <%= link "Users", to: user_path(@conn, :index)%>
+    </span>
+    |
+    <span>
+      <%= link "Logout", to: auth_path(@conn, :logout), method: :delete %>
+    </span>
+  <% else %>
+    <span>
+      <%= link "Login", to: auth_path(@conn, :new)%>
+    </span>
+  <% end %>
+</div>

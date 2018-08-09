@@ -1,0 +1,50 @@
+<h2>Listing Holidays</h2>
+
+<%= form_for @conn, holiday_path(@conn, :index), [method: :get, class: "form-inline"], fn f -> %>
+  <div class="form-group">
+    <%= label f, "From:", class: "control-label" %>
+    <%= date_input f, :start_date, value: @start_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "To:", class: "control-label" %>
+    <%= date_input f, :end_date, value: @end_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Update", class: "btn btn-primary" %>
+  </div>
+
+  <div class="form-group">
+    <%= link "Reset", to: holiday_path(@conn, :index) %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Kind</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for holiday <- @holidays do %>
+    <tr>
+      <td><%= holiday.title %></td>
+      <td><%= holiday.date %></td>
+      <td><%= holiday.kind %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: holiday_path(@conn, :show, holiday), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: holiday_path(@conn, :edit, holiday), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: holiday_path(@conn, :delete, holiday), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Holiday", to: holiday_path(@conn, :new) %></span>

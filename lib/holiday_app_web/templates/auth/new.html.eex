@@ -1,0 +1,21 @@
+<h2>Login</h2>
+
+<%= form_for @conn, "/auth/identity/callback", [method: "post"], fn f -> %>
+  <div class="form-group">
+    <%= label f, "Email:", class: "control-label" %>
+    <%= email_input f, :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "Password:", class: "control-label" %>
+    <%= password_input f, :password, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Log in", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<a href="/auth/google">Login with Google</a>
+<br/>
+<a href="/auth/facebook">Login with Facebook</a>

@@ -1,0 +1,24 @@
+<h2>Listing Users</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Provider</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for user <- @users do %>
+      <tr>
+        <td><%= link "#{user.id}", to: user_path(@conn, :show, user) %></td>
+        <td><%= user.name %></td>
+        <td><%= humanize(user.provider) %></td>
+        <td class="text-right">
+          <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

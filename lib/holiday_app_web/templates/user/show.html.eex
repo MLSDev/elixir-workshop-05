@@ -1,0 +1,20 @@
+<h2>Show User</h2>
+
+<ul>
+  <li>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </li>
+
+  <li>
+    <strong>Provider:</strong>
+    <%= humanize(@user.provider) %>
+  </li>
+
+  <li>
+    <strong>Photo:</strong>
+    <%= img_tag(@user.photo_url) %>
+  </li>
+</ul>
+
+<span><%= link "Back", to: user_path(@conn, :index) %></span>
