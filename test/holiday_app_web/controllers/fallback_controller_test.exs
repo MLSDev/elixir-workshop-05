@@ -11,6 +11,14 @@ defmodule HolidayAppWeb.FallbackControllerTest do
     end
   end
 
+  describe "403" do
+    test "sets 403 response code and renders `forbidden` page", %{conn: conn} do
+      conn = FallbackController.call(conn, {:error, :forbidden})
+      assert conn.status == 403
+      assert conn.resp_body =~ "Forbidden"
+    end
+  end
+
   describe "404" do
     test "sets 404 response code and renders `not found` page", %{conn: conn} do
       conn = FallbackController.call(conn, {:error, :not_found})
