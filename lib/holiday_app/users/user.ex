@@ -14,6 +14,8 @@ defmodule HolidayApp.Users.User do
     field :photo_url, :string, size: 2048
     field :hosted_domain, :string
 
+    field :is_admin, :boolean, default: false
+
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 

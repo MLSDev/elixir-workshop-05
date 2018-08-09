@@ -3,6 +3,7 @@ defmodule HolidayApp.Users do
   The Users context.
   """
   import Ecto.Query, warn: false
+  import Ecto.Changeset, only: [change: 2]
 
   alias HolidayApp.Repo
   alias HolidayApp.Users.User
@@ -48,5 +49,12 @@ defmodule HolidayApp.Users do
     else
       User.create_changeset(%User{}, attrs) |> Repo.insert()
     end
+  end
+
+  @doc """
+  Make User an admin.
+  """
+  def make_admin(%User{} = user) do
+    change(user, is_admin: true) |> Repo.update()
   end
 end
