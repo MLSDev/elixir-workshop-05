@@ -119,12 +119,7 @@ defmodule HolidayApp.UsersTest do
   describe "make_admin/1" do
     test "makes non-admin an admin" do
       user = insert(:user)
-      assert {:ok, %User{is_admin: true}} = Users.make_admin(user)
-    end
-
-    test "does not affect admins" do
-      user = insert(:user, %{is_admin: true})
-      assert {:ok, %User{is_admin: true}} = Users.make_admin(user)
+      assert {:ok, %User{role: "admin"}} = Users.make_admin(user)
     end
   end
 end

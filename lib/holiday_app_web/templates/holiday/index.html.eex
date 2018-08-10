@@ -39,17 +39,21 @@
 
       <td class="text-right">
         <span><%= link "Show", to: holiday_path(@conn, :show, holiday), class: "btn btn-default btn-xs" %></span>
-        <%= if admin?(@conn) do %>
+
+        <%= if can_update_holiday?(@conn, holiday) do %>
           <span><%= link "Edit", to: holiday_path(@conn, :edit, holiday), class: "btn btn-default btn-xs" %></span>
+        <% end %>
+
+        <%= if can_delete_holiday?(@conn, holiday) do %>
           <span><%= link "Delete", to: holiday_path(@conn, :delete, holiday), 
                                       method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-          <% end %>
+        <% end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= if admin?(@conn) do %>
+<%= if can_create_holiday?(@conn) do %>
   <span><%= link "New Holiday", to: holiday_path(@conn, :new) %></span>
 <% end %>

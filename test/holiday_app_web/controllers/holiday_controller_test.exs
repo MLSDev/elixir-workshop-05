@@ -2,9 +2,8 @@ defmodule HolidayAppWeb.HolidayControllerTest do
   use HolidayAppWeb.ConnCase
 
   setup %{conn: conn} = config do
-    if user_kind = config[:login] do
-      is_admin = (user_kind == :admin)
-      user = insert(:user, %{is_admin: is_admin})
+    if role = config[:login] do
+      user = insert(:user, %{role: to_string(role)})
       conn = build_conn_and_login(user)
       {:ok, conn: conn, user: user}
     else

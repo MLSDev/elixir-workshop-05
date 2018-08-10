@@ -6,43 +6,48 @@ defmodule HolidayApp.Holidays.HolidayPolicyTest do
   alias HolidayApp.Holidays.HolidayPolicy
 
   setup do
-    user = insert(:user)
-    admin = insert(:user, %{is_admin: true})
+    employee = insert(:user, %{role: "employee"})
+    manager = insert(:user, %{role: "manager"})
+    admin = insert(:user, %{role: "admin"})
     holiday = insert(:holiday)
-    {:ok, %{user: user, admin: admin, holiday: holiday}}
+    {:ok, %{employee: employee, manager: manager, admin: admin, holiday: holiday}}
   end
 
   describe "create" do
-    test "permits admin", %{admin: admin} do
+    test "permits admin and manager", %{admin: admin, manager: manager} do
       assert permit?(HolidayPolicy, :create, admin)
+      assert permit?(HolidayPolicy, :create, manager)
     end
 
-    test "denies user", %{user: user} do
-      refute permit?(HolidayPolicy, :create, user)
+    test "denies employee", %{employee: employee} do
+      refute permit?(HolidayPolicy, :create, employee)
     end
   end
 
   describe "index" do
-    test "permits all", %{user: user, admin: admin} do
+    test "permits all", %{employee: employee, admin: admin, manager: manager} do
       assert permit?(HolidayPolicy, :index, admin)
-      assert permit?(HolidayPolicy, :index, user)
+      assert permit?(HolidayPolicy, :index, employee)
+      assert permit?(HolidayPolicy, :index, manager)
     end
   end
 
   describe "show" do
-    test "permits all", %{user: user, admin: admin, holiday: holiday} do
+    test "permits all", %{employee: employee, admin: admin, manager: manager, holiday: holiday} do
       assert permit?(HolidayPolicy, :show, admin, holiday: holiday)
-      assert permit?(HolidayPolicy, :show, user, holiday: holiday)
+      assert permit?(HolidayPolicy, :show, employee, holiday: holiday)
+      assert permit?(HolidayPolicy, :show, manager, holiday: holiday)
     end
   end
 
   describe "update" do
-    test "permits admin", %{admin: admin, holiday: holiday} do
+    test "permits admin and manager", %{admin: admin, manager: manager, holiday: holiday} do
       assert permit?(HolidayPolicy, :update, admin, holiday: holiday)
+      assert permit?(HolidayPolicy, :update, manager, holiday: holiday)
     end
 
-    test "denies user", %{user: user, holiday: holiday} do
-      refute permit?(HolidayPolicy, :update, user, holiday: holiday)
+    test "denies employee", %{employee: employee, holiday: holiday} do
+      refute permit?(HolidayPolicy, :update, employee, holiday: holiday)
     end
   end
 
@@ -51,8 +56,9 @@ defmodule HolidayApp.Holidays.HolidayPolicyTest do
       assert permit?(HolidayPolicy, :delete, admin, holiday: holiday)
     end
 
-    test "denies user", %{user: user, holiday: holiday} do
-      refute permit?(HolidayPolicy, :delete, user, holiday: holiday)
+    test "denies employee and manager", %{employee: employee,manager: manager, holiday: holiday} do
+      refute permit?(HolidayPolicy, :delete, employee, holiday: holiday)
+      refute permit?(HolidayPolicy, :delete, manager, holiday: holiday)
     end
   end
 end

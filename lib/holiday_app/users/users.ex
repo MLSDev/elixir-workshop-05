@@ -95,6 +95,6 @@ defmodule HolidayApp.Users do
   Make User an admin.
   """
   def make_admin(%User{} = user) do
-    change(user, is_admin: true) |> Repo.update()
+    change(user, role: "admin") |> Repo.update()
   end
 end

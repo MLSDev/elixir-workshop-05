@@ -12,9 +12,6 @@
       </div>
       <div class="col-md-6 text-right">
         <span class="text-muted"><%= current_user(@conn).email %></span>
-        <%= if admin?(@conn) do %>
-          <span class="label label-warning">admin</span>
-        <% end %>
         |
         <span>
           <%= link "My Profile", to: user_path(@conn, :edit, current_user(@conn)) %>

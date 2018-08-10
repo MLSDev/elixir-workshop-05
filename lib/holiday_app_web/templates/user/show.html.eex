@@ -23,14 +23,15 @@
       </li>
 
       <li>
-        <strong>Is admin:</strong>
-        <%= @user.is_admin %>
+        <strong>Role:</strong>
+        <%= humanize(@user.role) %>
       </li>
     </ul>
   </div>
 </div>
 
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
 <%= if can_update_user?(@conn, @user) do %>
   <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
+  |
 <% end %>
+<span><%= link "Back", to: user_path(@conn, :index) %></span>

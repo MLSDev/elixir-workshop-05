@@ -17,8 +17,8 @@
   </li>
 </ul>
 
-<% if admin?(@conn) do %>
+<%= if can_update_holiday?(@conn, @holiday) do %>
   <span><%= link "Edit", to: holiday_path(@conn, :edit, @holiday) %></span>
   |
-<% end%>
+<% end %>
 <span><%= link "Back", to: holiday_path(@conn, :index) %></span>

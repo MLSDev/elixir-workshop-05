@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>E-mail</th>
       <th>Provider</th>
+      <th>Role</th>
       <th></th>
     </tr>
   </thead>
@@ -14,14 +15,14 @@
       <tr>
         <td>
           <%= user.name %>
-          <%= if user.is_admin do %>
-            <span class="label label-warning">admin</span>
-          <% end %>
         </td>
         <td>
           <%= link "#{user.email}", to: user_path(@conn, :show, user) %>
         </td>
         <td><%= humanize(user.provider) %></td>
+        <td>
+          <span class="label label-warning"><%= user.role %></span>
+        </td>
         <td class="text-right">
           <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
           <%= if can_update_user?(@conn, user) do %>

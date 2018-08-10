@@ -8,8 +8,8 @@ defmodule HolidayApp.Users.UserPolicy do
   def authorize(:index, _, _), do: :ok
   def authorize(:show, _, _), do: :ok
 
-  def authorize(:create, %User{is_admin: true}, _), do: :ok
-  def authorize(:update, %User{is_admin: true}, _), do: :ok
+  def authorize(:create, %User{role: role}, _) when role in ["admin", "manager"], do: :ok
+  def authorize(:update, %User{role: role}, _) when role in ["admin", "manager"], do: :ok
 
   def authorize(:update, %User{id: id}, %{user: %User{id: other_id}})
     when id == other_id, do: :ok

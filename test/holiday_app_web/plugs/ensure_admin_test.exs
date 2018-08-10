@@ -4,8 +4,8 @@ defmodule HolidayAppWeb.Plugs.EnsureAdminTest do
   alias HolidayAppWeb.Plugs.EnsureAdmin
 
   describe "call() performs authorization" do
-    test "permits admin " do
-      admin = insert(:user, %{is_admin: true})
+    test "permits admin" do
+      admin = insert(:user, %{role: "admin"})
       conn = build_conn_for_user(admin)
 
       conn = EnsureAdmin.call(conn, %{})
@@ -13,7 +13,7 @@ defmodule HolidayAppWeb.Plugs.EnsureAdminTest do
       refute conn.halted
     end
 
-    test "rejects unauthorized user, halts connection" do
+    test "denies unauthorized user, halts connection" do
       user = insert(:user)
       conn = build_conn_for_user(user)
 
