@@ -3,10 +3,10 @@ defmodule HolidayApp.Users do
   The Users context.
   """
   import Ecto.Query, warn: false
-  import Ecto.Changeset, only: [change: 2]
+  import Ecto.Changeset
 
   alias HolidayApp.Repo
-  alias HolidayApp.Users.User
+  alias HolidayApp.Users.{User, Role}
 
   @doc """
   Lists all users
@@ -79,6 +79,16 @@ defmodule HolidayApp.Users do
     else
       create_user(attrs)
     end
+  end
+
+  @doc """
+  Assigns new role to user.
+  Returns {:ok, %User{}} or `{:error, reason}`
+  """
+  def assign_role_to_user(%User{} = user, role) do
+    change(user, role: role)
+    |> validate_inclusion(:role, Role.roles())
+    |> Repo.update()
   end
 
   @doc """
