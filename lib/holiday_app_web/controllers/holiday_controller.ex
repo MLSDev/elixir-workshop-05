@@ -2,9 +2,13 @@ defmodule HolidayAppWeb.HolidayController do
   use HolidayAppWeb, :controller
 
   alias HolidayApp.Holidays
-  alias HolidayApp.Holidays.Holiday
+  alias HolidayApp.Holidays.{Holiday, HolidayPolicy}
 
   action_fallback HolidayAppWeb.FallbackController
+
+  plug HolidayAppWeb.Plugs.Authorize,
+    policy: HolidayPolicy,
+    params_fun: &(__MODULE__.fetch_params/2)
 
   def index(conn, params) do
     start_date = params["start_date"]
@@ -61,4 +65,9 @@ defmodule HolidayAppWeb.HolidayController do
     |> put_flash(:info, "Holiday deleted successfully.")
     |> redirect(to: holiday_path(conn, :index))
   end
+
+  def fetch_params(_conn, %{"id" => id}) do
+    [holiday: Holidays.get_holiday!(id)]
+  end
+  def fetch_params(_, _), do: []
 end

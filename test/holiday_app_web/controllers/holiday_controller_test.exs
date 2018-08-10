@@ -28,6 +28,19 @@ defmodule HolidayAppWeb.HolidayControllerTest do
     end)
   end
 
+  @tag login: :user
+  test "requires admin", %{conn: conn} do
+    holiday = insert(:holiday)
+    Enum.each([
+      get(conn, holiday_path(conn, :new)),
+      post(conn, holiday_path(conn, :create, %{})),
+      get(conn, holiday_path(conn, :edit, holiday.id)),
+      put(conn, holiday_path(conn, :update, holiday.id, %{"kind" => "workday"})),
+      delete(conn, holiday_path(conn, :delete, holiday.id))
+    ], fn conn ->
+      assert html_response(conn, :forbidden) =~ "Forbidden"
+    end)
+  end
 
   describe "index" do
     @tag login: :user
