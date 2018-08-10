@@ -2,8 +2,13 @@ defmodule HolidayAppWeb.UserController do
   use HolidayAppWeb, :controller
 
   alias HolidayApp.Users
+  alias HolidayApp.Users.UserPolicy
 
   action_fallback HolidayAppWeb.FallbackController
+
+  plug HolidayAppWeb.Plugs.Authorize,
+    policy: UserPolicy,
+    params_fun: &(__MODULE__.fetch_params/2)
 
   def index(conn, _params) do
     users = Users.list_users()
@@ -33,4 +38,9 @@ defmodule HolidayAppWeb.UserController do
         render(conn, "edit.html", user: user, changeset: changeset)
     end
   end
+
+  def fetch_params(_conn, %{"id" => id}) do
+    [user: Users.get_user!(id)]
+  end
+  def fetch_params(_, _), do: []
 end

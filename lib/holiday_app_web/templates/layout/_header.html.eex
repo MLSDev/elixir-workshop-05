@@ -5,18 +5,20 @@
         <span>
           <%= link "Holidays", to: holiday_path(@conn, :index)%>
         </span>
-        <%= if admin?(@conn) do %>
-          |
-          <span>
-            <%= link "Users", to: user_path(@conn, :index)%>
-          </span>
-        <% end %>
+        |
+        <span>
+          <%= link "Users", to: user_path(@conn, :index)%>
+        </span>
       </div>
       <div class="col-md-6 text-right">
         <span class="text-muted"><%= current_user(@conn).email %></span>
         <%= if admin?(@conn) do %>
           <span class="label label-warning">admin</span>
         <% end %>
+        |
+        <span>
+          <%= link "My Profile", to: user_path(@conn, :edit, current_user(@conn)) %>
+        </span>
         |
         <span>
           <%= link "Logout", to: auth_path(@conn, :logout), method: :delete %>
