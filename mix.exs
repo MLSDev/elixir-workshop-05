@@ -65,7 +65,8 @@ defmodule HolidayApp.Mixfile do
       {:guardian, "~> 1.0"},
       {:ueberauth_identity, "~> 0.2"},
       {:ueberauth_google, "~> 0.7"},
-      {:ueberauth_facebook, "~> 0.7"}
+      {:ueberauth_facebook, "~> 0.7"},
+      {:bodyguard, "~> 2.2"}
     ]
   end
 

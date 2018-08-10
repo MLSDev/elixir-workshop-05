@@ -23,6 +23,7 @@ defmodule HolidayAppWeb do
       import Plug.Conn
       import HolidayAppWeb.Router.Helpers
       import HolidayAppWeb.Gettext
+      import Bodyguard
     end
   end
 
@@ -41,6 +42,7 @@ defmodule HolidayAppWeb do
       import HolidayAppWeb.ErrorHelpers
       import HolidayAppWeb.ViewHelpers
       import HolidayAppWeb.Gettext
+      import Bodyguard
     end
   end
 
@@ -56,6 +58,7 @@ defmodule HolidayAppWeb do
     quote do
       use Phoenix.Channel
       import HolidayAppWeb.Gettext
+      import Bodyguard
     end
   end
 
