@@ -31,28 +31,28 @@ defmodule HolidayApp.Holidays.HolidayPolicyTest do
 
   describe "show" do
     test "permits all", %{user: user, admin: admin, holiday: holiday} do
-      assert permit?(HolidayPolicy, :show, admin, holiday)
-      assert permit?(HolidayPolicy, :show, user, holiday)
+      assert permit?(HolidayPolicy, :show, admin, holiday: holiday)
+      assert permit?(HolidayPolicy, :show, user, holiday: holiday)
     end
   end
 
   describe "update" do
     test "permits admin", %{admin: admin, holiday: holiday} do
-      assert permit?(HolidayPolicy, :update, admin, holiday)
+      assert permit?(HolidayPolicy, :update, admin, holiday: holiday)
     end
 
     test "denies user", %{user: user, holiday: holiday} do
-      refute permit?(HolidayPolicy, :update, user, holiday)
+      refute permit?(HolidayPolicy, :update, user, holiday: holiday)
     end
   end
 
   describe "delete" do
     test "permits admin", %{admin: admin, holiday: holiday} do
-      assert permit?(HolidayPolicy, :delete, admin, holiday)
+      assert permit?(HolidayPolicy, :delete, admin, holiday: holiday)
     end
 
     test "denies user", %{user: user, holiday: holiday} do
-      refute permit?(HolidayPolicy, :delete, user, holiday)
+      refute permit?(HolidayPolicy, :delete, user, holiday: holiday)
     end
   end
 end
