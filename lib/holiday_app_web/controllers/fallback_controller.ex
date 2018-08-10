@@ -9,6 +9,10 @@ defmodule HolidayAppWeb.FallbackController do
     put_status_and_render(conn, :forbidden, "403.html")
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    call(conn, {:error, :forbidden})
+  end
+
   def call(conn, {:error, :not_found}) do
     put_status_and_render(conn, :not_found, "404.html")
   end

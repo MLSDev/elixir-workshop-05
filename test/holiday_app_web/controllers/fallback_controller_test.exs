@@ -17,6 +17,12 @@ defmodule HolidayAppWeb.FallbackControllerTest do
       assert conn.status == 403
       assert conn.resp_body =~ "Forbidden"
     end
+
+    test ":unauthorized", %{conn: conn} do
+      conn = FallbackController.call(conn, {:error, :unauthorized})
+      assert conn.status == 403
+      assert conn.resp_body =~ "Forbidden"
+    end
   end
 
   describe "404" do
